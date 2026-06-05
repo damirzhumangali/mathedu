@@ -246,7 +246,7 @@ const GradeView: React.FC<GradeViewProps> = ({ gradeData, onLessonSelect, onBack
   let lessonCounter = 0;
 
   return (
-    <main className="me-grade-view">
+    <main className="me-grade-view me-page">
       <div className="me-container">
         <button className="me-back-btn" onClick={onBack}>← Басты бетке</button>
 
@@ -353,25 +353,27 @@ const LessonView: React.FC<LessonViewProps> = ({ lesson, chapter, grade, onBack 
   ];
 
   return (
-    <main className="me-lesson-view">
-      <button className="me-back-btn" onClick={onBack}>← Артқа</button>
+    <main className="me-page">
+      <div className="me-container">
+        <button className="me-back-btn" onClick={onBack}>← Артқа</button>
 
-      <div className="me-lesson-header">
-        <p className="me-lesson-grade-label">
-          {grade}-сынып · {chapter.title}
-        </p>
-        <h1 className="me-lesson-title-big">{lesson.title}</h1>
-      </div>
-
-      {sections.map((sec) => (
-        <div key={sec.key} className="me-lesson-section">
-          <div className="me-ls-head">
-            <div className="me-ls-icon">{sec.icon}</div>
-            <span className="me-ls-label">{sec.label}</span>
-          </div>
-          {sec.body}
+        <div className="me-lesson-header">
+          <p className="me-lesson-grade-label">
+            {grade}-сынып · {chapter.title}
+          </p>
+          <h1 className="me-lesson-title-big">{lesson.title}</h1>
         </div>
-      ))}
+
+        {sections.map((sec) => (
+          <div key={sec.key} className="me-lesson-section">
+            <div className="me-ls-head">
+              <div className="me-ls-icon">{sec.icon}</div>
+              <span className="me-ls-label">{sec.label}</span>
+            </div>
+            {sec.body}
+          </div>
+        ))}
+      </div>
     </main>
   );
 };
@@ -414,12 +416,12 @@ body { overflow-x: hidden; background: #F8FAFC; }
 }
 .me-wrap > main { flex: 1; }
 
-/* единый горизонтальный контейнер для всех секций */
+/* единый горизонтальный контейнер — одна сетка на всех страницах */
 .me-container {
   max-width: 1180px;
   margin: 0 auto;
-  padding-left: clamp(1rem, 3vw, 1.5rem);
-  padding-right: clamp(1rem, 3vw, 1.5rem);
+  padding-left: 24px;
+  padding-right: 24px;
 }
 
 /* ═══════════════════════════════════════
@@ -433,11 +435,12 @@ body { overflow-x: hidden; background: #F8FAFC; }
   -webkit-backdrop-filter: blur(14px);
   background: rgba(248, 250, 252, .92);
   border-bottom: 1px solid var(--line);
-  padding: 0 clamp(1rem, 4vw, 3rem);
 }
 .me-header-inner {
   max-width: 1180px;
   margin: 0 auto;
+  padding-left: 24px;
+  padding-right: 24px;
   height: 60px;
   display: flex;
   align-items: center;
@@ -790,7 +793,7 @@ body { overflow-x: hidden; background: #F8FAFC; }
 ═══════════════════════════════════════ */
 .me-footer {
   background: var(--ink); color: rgba(255,255,255,.5);
-  text-align: center; padding: 2.2rem clamp(1rem, 4vw, 3rem); font-size: .88rem;
+  text-align: center; padding: 2.2rem 24px; font-size: .88rem;
 }
 .me-footer-logo {
   font-family: 'Rubik', sans-serif; font-weight: 900; font-size: 1.25rem;
@@ -808,6 +811,15 @@ body { overflow-x: hidden; background: #F8FAFC; }
   animation-delay: var(--delay, 0ms);
 }
 @media (max-width: 768px) { .me-fade-in { animation-duration: .4s; } }
+
+/* ═══════════════════════════════════════
+   PAGE WRAPPER — одинаковый на всех страницах
+═══════════════════════════════════════ */
+.me-page {
+  flex: 1;
+  padding-top: 48px;
+  padding-bottom: 48px;
+}
 
 /* ═══════════════════════════════════════
    BACK BUTTON
@@ -834,10 +846,7 @@ body { overflow-x: hidden; background: #F8FAFC; }
 /* ═══════════════════════════════════════
    GRADE VIEW
 ═══════════════════════════════════════ */
-.me-grade-view {
-  padding: clamp(2rem, 5vw, 3.5rem) 0;
-  flex: 1;
-}
+.me-grade-view { /* flex и вертикальный padding — через .me-page */ }
 .me-grade-header { margin-bottom: 2.4rem; }
 .me-grade-title {
   font-family: 'Rubik', sans-serif; font-weight: 900;
@@ -909,12 +918,7 @@ body { overflow-x: hidden; background: #F8FAFC; }
 /* ═══════════════════════════════════════
    LESSON VIEW
 ═══════════════════════════════════════ */
-.me-lesson-view {
-  max-width: 820px;
-  margin: 0 auto;
-  padding: clamp(2rem, 5vw, 3.5rem) clamp(1rem, 4vw, 3rem);
-  flex: 1;
-}
+.me-lesson-view { /* убрано: flex и padding — через .me-page + .me-container */ }
 .me-lesson-header { margin-bottom: 2rem; }
 .me-lesson-grade-label {
   font-size: .78rem; font-weight: 700;
@@ -1011,29 +1015,32 @@ iframe { max-width: 100%; }
    MOBILE ≤768px — все страницы
 ═══════════════════════════════════════ */
 @media (max-width: 768px) {
-  /* Единый контейнер: 16px боковых отступов — только L/R, не перебивает вертикаль */
-  .me-container { padding-left: 1rem; padding-right: 1rem; }
+  /* Единый контейнер: 16px боковых отступов */
+  .me-container     { padding-left: 16px; padding-right: 16px; }
+  .me-header-inner  { padding-left: 16px; padding-right: 16px; }
+  .me-footer        { padding-left: 16px; padding-right: 16px; }
 
-  /* Hero: меньше вертикального воздуха */
+  /* Page wrapper: меньше вертикального воздуха */
+  .me-page { padding-top: 24px; padding-bottom: 32px; }
+
+  /* Hero: меньше воздуха */
   .me-hero { padding-top: 2rem; padding-bottom: 1.5rem; gap: 1.5rem; }
   .me-hero-desc { margin-bottom: 1.2rem; }
 
   /* Goal: компактнее */
   .me-goal { padding-top: 1.5rem; padding-bottom: 1.5rem; }
 
-  /* Sections — только вертикаль, горизонталь берёт .me-container */
+  /* Sections — только вертикаль */
   .me-section { padding-top: 2.5rem; padding-bottom: 2.5rem; }
   .me-section-head { margin-bottom: 1.2rem; }
 
-  /* Grade view */
-  .me-grade-view   { padding-top: 1.5rem; padding-bottom: 2rem; }
+  /* Grade view: отступы внутри */
   .me-grade-header { margin-bottom: 1.4rem; }
   .me-back-btn     { margin-bottom: 1.2rem; }
   .me-chapter      { margin-bottom: 1.8rem; }
   .me-chapter-head { margin-bottom: .75rem; }
 
-  /* Lesson view: совпадает с .me-container */
-  .me-lesson-view    { padding: 1.5rem 1rem 2rem; }
+  /* Lesson view: отступы внутри */
   .me-lesson-section { padding: 1rem; }
   .me-lesson-header  { margin-bottom: 1.4rem; }
   .me-formula-block  { font-size: .91rem; }
