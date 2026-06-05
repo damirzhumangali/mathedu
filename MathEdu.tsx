@@ -399,8 +399,8 @@ const CSS = `
   --radius:       20px;
 }
 
-html { scroll-behavior: smooth; }
-body { overflow-x: hidden; }
+html { scroll-behavior: smooth; overflow-x: hidden; }
+body { overflow-x: hidden; background: #F8FAFC; }
 
 .me-wrap {
   font-family: 'Nunito', sans-serif;
@@ -409,6 +409,8 @@ body { overflow-x: hidden; }
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  overflow-x: hidden;
+  width: 100%;
 }
 .me-wrap > main { flex: 1; }
 
@@ -416,7 +418,8 @@ body { overflow-x: hidden; }
 .me-container {
   max-width: 1180px;
   margin: 0 auto;
-  padding: 0 clamp(1rem, 3vw, 1.5rem);
+  padding-left: clamp(1rem, 3vw, 1.5rem);
+  padding-right: clamp(1rem, 3vw, 1.5rem);
 }
 
 /* ═══════════════════════════════════════
@@ -726,7 +729,7 @@ body { overflow-x: hidden; }
 /* ═══════════════════════════════════════
    SHARED SECTION LAYOUT
 ═══════════════════════════════════════ */
-.me-section { padding: 4rem 0; }
+.me-section { padding-top: 4rem; padding-bottom: 4rem; }
 .me-section-head { text-align: left; margin-bottom: 2rem; }
 .me-tag {
   display: inline-block;
@@ -1008,22 +1011,22 @@ iframe { max-width: 100%; }
    MOBILE ≤768px — все страницы
 ═══════════════════════════════════════ */
 @media (max-width: 768px) {
-  /* Единый контейнер: 16px боковых отступов */
-  .me-container { padding: 0 1rem; }
+  /* Единый контейнер: 16px боковых отступов — только L/R, не перебивает вертикаль */
+  .me-container { padding-left: 1rem; padding-right: 1rem; }
 
   /* Hero: меньше вертикального воздуха */
-  .me-hero { padding: 2rem 0 1.5rem; gap: 1.5rem; }
+  .me-hero { padding-top: 2rem; padding-bottom: 1.5rem; gap: 1.5rem; }
   .me-hero-desc { margin-bottom: 1.2rem; }
 
   /* Goal: компактнее */
-  .me-goal { padding: 1.5rem 0; }
+  .me-goal { padding-top: 1.5rem; padding-bottom: 1.5rem; }
 
-  /* Sections */
-  .me-section { padding: 2.5rem 0; }
+  /* Sections — только вертикаль, горизонталь берёт .me-container */
+  .me-section { padding-top: 2.5rem; padding-bottom: 2.5rem; }
   .me-section-head { margin-bottom: 1.2rem; }
 
   /* Grade view */
-  .me-grade-view   { padding: 1.5rem 0 2rem; }
+  .me-grade-view   { padding-top: 1.5rem; padding-bottom: 2rem; }
   .me-grade-header { margin-bottom: 1.4rem; }
   .me-back-btn     { margin-bottom: 1.2rem; }
   .me-chapter      { margin-bottom: 1.8rem; }
