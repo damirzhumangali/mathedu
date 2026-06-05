@@ -395,14 +395,14 @@ const CSS = `
   --accent:       #F59E0B;
   --ink:          #1E1B4B;
   --ink-soft:     #5B5B7A;
-  --bg:           #F8FAFC;
+  --bg:           #FFFFFF;
   --card:         #FFFFFF;
   --line:         #E8E8F2;
   --radius:       20px;
 }
 
 html { scroll-behavior: smooth; overflow-x: hidden; }
-body { overflow-x: hidden; background: #F8FAFC; }
+body { overflow-x: hidden; background: #FFFFFF; }
 
 .me-wrap {
   font-family: 'Nunito', sans-serif;
@@ -593,15 +593,7 @@ body { overflow-x: hidden; background: #F8FAFC; }
 ═══════════════════════════════════════ */
 .me-hero-wrap { position: relative; overflow: hidden; }
 
-.me-blob { position: absolute; border-radius: 50%; filter: blur(90px); opacity: .12; pointer-events: none; }
-.me-blob-1 { width: 420px; height: 420px; background: var(--primary); top: -120px; left: -80px; }
-.me-blob-2 { width: 320px; height: 320px; background: #7C3AED;        bottom: -60px; right: 8%; }
-.me-blob-3 { width: 200px; height: 200px; background: var(--success); top: 40%; right: 35%; }
-@media (max-width: 480px) {
-  .me-blob-1 { width: 260px; height: 260px; top: -80px; left: -60px; }
-  .me-blob-2 { width: 200px; height: 200px; }
-  .me-blob-3 { width: 130px; height: 130px; }
-}
+.me-blob { display: none; }
 
 .me-hero {
   padding: 4rem 0;
