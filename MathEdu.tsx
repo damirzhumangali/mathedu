@@ -667,11 +667,6 @@ body { overflow-x: hidden; }
 }
 .me-btn-light:hover { background: var(--primary-soft); border-color: var(--primary); }
 
-@media (max-width: 480px) {
-  .me-hero-btns { flex-direction: column; gap: .7rem; }
-  .me-btn-dark, .me-btn-light { width: 100%; }
-}
-
 /* Feature grid */
 .me-features-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: stretch; }
 .me-feature-card {
@@ -992,6 +987,67 @@ body { overflow-x: hidden; }
   background: var(--primary-soft); color: var(--primary);
 }
 .me-hw-text { font-size: .92rem; color: var(--ink); line-height: 1.55; flex: 1; }
+
+/* ═══════════════════════════════════════
+   GLOBAL SAFETY
+═══════════════════════════════════════ */
+img { max-width: 100%; height: auto; }
+iframe { max-width: 100%; }
+
+/* Формулы с переносами строк (\n в данных) */
+.me-formula-block {
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+.me-theory-text   { overflow-wrap: break-word; word-break: break-word; }
+.me-hw-text       { overflow-wrap: break-word; word-break: break-word; }
+.me-lesson-title-big { overflow-wrap: break-word; word-break: break-word; }
+
+/* ═══════════════════════════════════════
+   MOBILE ≤768px — все страницы
+═══════════════════════════════════════ */
+@media (max-width: 768px) {
+  /* Единый контейнер: 16px боковых отступов */
+  .me-container { padding: 0 1rem; }
+
+  /* Hero: меньше вертикального воздуха */
+  .me-hero { padding: 2rem 0 1.5rem; gap: 1.5rem; }
+  .me-hero-desc { margin-bottom: 1.2rem; }
+
+  /* Goal: компактнее */
+  .me-goal { padding: 1.5rem 0; }
+
+  /* Sections */
+  .me-section { padding: 2.5rem 0; }
+  .me-section-head { margin-bottom: 1.2rem; }
+
+  /* Grade view */
+  .me-grade-view   { padding: 1.5rem 0 2rem; }
+  .me-grade-header { margin-bottom: 1.4rem; }
+  .me-back-btn     { margin-bottom: 1.2rem; }
+  .me-chapter      { margin-bottom: 1.8rem; }
+  .me-chapter-head { margin-bottom: .75rem; }
+
+  /* Lesson view: совпадает с .me-container */
+  .me-lesson-view    { padding: 1.5rem 1rem 2rem; }
+  .me-lesson-section { padding: 1rem; }
+  .me-lesson-header  { margin-bottom: 1.4rem; }
+  .me-formula-block  { font-size: .91rem; }
+}
+
+/* ═══════════════════════════════════════
+   MOBILE ≤540px — одна колонка везде
+═══════════════════════════════════════ */
+@media (max-width: 540px) {
+  /* Feature cards hero → 1 колонка */
+  .me-features-grid { grid-template-columns: 1fr; gap: .75rem; }
+
+  /* Кнопки hero во всю ширину чуть раньше */
+  .me-hero-btns  { flex-direction: column; gap: .65rem; }
+  .me-btn-dark,
+  .me-btn-light  { width: 100%; }
+}
 `;
 
 // ══════════════════════════════════════════════════════════════════════════
