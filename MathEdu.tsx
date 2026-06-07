@@ -23,12 +23,10 @@ type Route =
   | { view: "home" }
   | { view: "grade";  grade: Grade }
   | { view: "lesson"; grade: Grade; lessonId: string }
-  | { view: "quiz";     grade: Grade }
-  | { view: "quiz-mix" };
+  | { view: "quiz"; grade: Grade };
 
 interface TestItem { icon: string; title: string; desc: string; }
 interface QuizQuestion { id: number; q: string; latex?: string; options: string[]; correct: number; }
-interface MixQuestion  { id: number; q: string; options: string[]; correctText: string; }
 interface NavItem { label: string; href: string; }
 interface HowStep { num: string; title: string; desc: string; }
 
@@ -77,9 +75,8 @@ const HOW_STEPS: HowStep[] = [
 ];
 
 const REVIEW_TESTS: TestItem[] = [
-  { icon: "5",  title: "5-сынып қайталау тесті",  desc: "Натурал сандар, бөлшектер, пропорциялар және геометрия" },
-  { icon: "6",  title: "6-сынып қайталау тесті",  desc: "Теңдеулер, координаталар, пропорциялар және өрнектер"  },
-  { icon: "★", title: "Аралас қайталау тесті",   desc: "5–6 сынып · барлық тақырыптардан аралас 30 сұрақ"      },
+  { icon: "5", title: "5-сынып қайталау тесті", desc: "Натурал сандар, бөлшектер, пропорциялар және геометрия" },
+  { icon: "6", title: "6-сынып қайталау тесті", desc: "Теңдеулер, координаталар, пропорциялар және өрнектер"   },
 ];
 
 const QUIZ_5: QuizQuestion[] = [
@@ -146,48 +143,6 @@ const QUIZ_6: QuizQuestion[] = [
   { id: 28, q: "−3x = 12. x = ?",                                                 options: ["4","−4","36","−36"],                correct: 1 },
   { id: 29, q: "Температура −5°C, 8°C-қа жылыды. Қазір?",                        options: ["−13°C","3°C","13°C","−3°C"],       correct: 1 },
   { id: 30, q: "800 теңгенің 25%-ы?",                                             options: ["100","200","400","250"],            correct: 1 },
-];
-
-function shuffle<T>(arr: T[]): T[] {
-  const a = [...arr];
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
-  }
-  return a;
-}
-
-const QUIZ_MIX: MixQuestion[] = [
-  { id:  1, q: "234 · 5 = ?",                                       options: ["1 070","1 270","1 170","1 150"],    correctText: "1 170"  },
-  { id:  2, q: "2⁴ = ?",                                            options: ["8","16","12","32"],                  correctText: "16"     },
-  { id:  3, q: "x + 7 = 15. x = ?",                                 options: ["7","8","22","9"],                    correctText: "8"      },
-  { id:  4, q: "Қайсысы жай сан?",                                  options: ["9","12","7","15"],                   correctText: "7"      },
-  { id:  5, q: "12 мен 18-дің ЕҮОБ-сы?",                           options: ["3","6","2","9"],                     correctText: "6"      },
-  { id:  6, q: "3/4 бөлшегінің алымы?",                            options: ["4","3","7","1"],                     correctText: "3"      },
-  { id:  7, q: "6/8 қысқартқанда:",                                 options: ["3/4","2/4","1/2","3/8"],             correctText: "3/4"    },
-  { id:  8, q: "2/7 + 3/7 = ?",                                     options: ["5/14","5/7","6/7","5/49"],           correctText: "5/7"    },
-  { id:  9, q: "2/3 · 3/4 = ?",                                     options: ["6/7","1/2","5/12","2/4"],            correctText: "1/2"    },
-  { id: 10, q: "1/2 : 1/4 = ?",                                     options: ["1/8","2","1/2","4"],                 correctText: "2"      },
-  { id: 11, q: "354 саны қай санға бөлінеді?",                      options: ["5-ке","9-ға","2-ге","10-ға"],        correctText: "2-ге"   },
-  { id: 12, q: "S = a·b. a = 5, b = 3. S = ?",                     options: ["16","8","15","18"],                  correctText: "15"     },
-  { id: 13, q: "5³ = ?",                                            options: ["15","125","25","75"],                 correctText: "125"    },
-  { id: 14, q: "1¾ = ? (бұрыс бөлшек)",                            options: ["7/4","5/4","3/4","8/4"],             correctText: "7/4"    },
-  { id: 15, q: "24 алма, 9-ы сатылды. Қалды?",                     options: ["33","15","16","14"],                 correctText: "15"     },
-  { id: 16, q: "12-нің 4-ке қатынасы?",                            options: ["2","3","4","8"],                     correctText: "3"      },
-  { id: 17, q: "2 : 3 = x : 12. x = ?",                            options: ["6","8","9","4"],                     correctText: "8"      },
-  { id: 18, q: "200-дің 25%-ы?",                                    options: ["25","75","50","40"],                 correctText: "50"     },
-  { id: 19, q: "Санның 20%-ы 40. Сан?",                            options: ["80","200","8","100"],                correctText: "200"    },
-  { id: 20, q: "−7-нің қарама-қарсы саны?",                        options: ["7","−7","0","1/7"],                  correctText: "7"      },
-  { id: 21, q: "|−9| = ?",                                          options: ["−9","9","0","1"],                    correctText: "9"      },
-  { id: 22, q: "(−3) + (−5) = ?",                                   options: ["8","−8","2","−2"],                   correctText: "−8"     },
-  { id: 23, q: "5 − (−3) = ?",                                      options: ["2","8","−8","−2"],                   correctText: "8"      },
-  { id: 24, q: "(−4) · 3 = ?",                                      options: ["12","−12","−7","7"],                 correctText: "−12"    },
-  { id: 25, q: "(−20) : (−5) = ?",                                  options: ["−4","4","−25","25"],                 correctText: "4"      },
-  { id: 26, q: "(−2)³ = ?",                                         options: ["8","−8","6","−6"],                   correctText: "−8"     },
-  { id: 27, q: "x + 5 = 2. x = ?",                                  options: ["7","−3","3","−7"],                   correctText: "−3"     },
-  { id: 28, q: "−3x = 12. x = ?",                                   options: ["4","−4","36","−36"],                 correctText: "−4"     },
-  { id: 29, q: "Температура −5°C, 8°C-қа жылыды. Қазір?",         options: ["−13°C","3°C","13°C","−3°C"],         correctText: "3°C"    },
-  { id: 30, q: "Масштаб 1:100, картада 5 см. Нақты қашықтық?",     options: ["50 см","500 см","5 см","5000 см"],   correctText: "500 см" },
 ];
 
 // ══════════════════════════════════════════════════════════════════════════
@@ -3738,123 +3693,7 @@ const QuizView: React.FC<{ questions: QuizQuestion[]; lsKey: string; onBack: () 
 };
 
 
-// ══════════════════════════════════════════════════════════════════════════
-// MIX QUIZ VIEW
-// ══════════════════════════════════════════════════════════════════════════
-interface MixShuffledQ { q: MixQuestion; opts: string[]; correctIdx: number; }
 
-const makeMixDeck = (): MixShuffledQ[] =>
-  shuffle(QUIZ_MIX).map(q => {
-    const opts = shuffle(q.options);
-    return { q, opts, correctIdx: opts.indexOf(q.correctText) };
-  });
-
-const MixQuizView: React.FC<{ lsKey: string; onBack: () => void }> = ({ lsKey, onBack }) => {
-  const [deck, setDeck] = useState<MixShuffledQ[]>(makeMixDeck);
-  const [answers, setAnswers] = useState<Record<number, number>>({});
-  const [submitted, setSubmitted] = useState(false);
-  const [best, setBest] = useState<number | null>(() => {
-    try { const v = localStorage.getItem(lsKey); return v ? parseInt(v, 10) : null; } catch { return null; }
-  });
-
-  const total    = deck.length;
-  const answered = Object.keys(answers).length;
-
-  const handleSelect = (qId: number, idx: number) => {
-    if (!submitted) setAnswers(prev => ({ ...prev, [qId]: idx }));
-  };
-
-  const handleSubmit = () => {
-    if (answered < total) return;
-    setSubmitted(true);
-    const score = deck.filter(({ q, correctIdx }) => answers[q.id] === correctIdx).length;
-    try {
-      if (best === null || score > best) { localStorage.setItem(lsKey, String(score)); setBest(score); }
-    } catch { /* ignore */ }
-  };
-
-  const handleRetry = () => { setDeck(makeMixDeck()); setAnswers({}); setSubmitted(false); };
-
-  const score = submitted ? deck.filter(({ q, correctIdx }) => answers[q.id] === correctIdx).length : 0;
-  const pct   = submitted ? Math.round((score / total) * 100) : 0;
-  const wrong = submitted ? deck.filter(({ q, correctIdx }) => answers[q.id] !== correctIdx) : [];
-
-  if (submitted) {
-    return (
-      <div className="me-quiz-wrap">
-        <div className="me-quiz-result-card">
-          <div className="me-quiz-result-icon">{pct >= 80 ? "🎉" : pct >= 50 ? "👍" : "📚"}</div>
-          <h2 className="me-quiz-result-title">
-            Сіз {total} сұрақтың <strong>{score}</strong>-іне дұрыс жауап бердіңіз
-          </h2>
-          <div className="me-quiz-result-pct">{pct}%</div>
-          {best !== null && <p className="me-quiz-result-best">Үздік нәтиже: {best}/{total}</p>}
-          {wrong.length > 0 && (
-            <div className="me-quiz-errors">
-              <h3 className="me-quiz-errors-title">Қателер:</h3>
-              {wrong.map(({ q, opts, correctIdx }) => (
-                <div key={q.id} className="me-quiz-error-item">
-                  <span className="me-quiz-error-num">{q.id}.</span>
-                  <span className="me-quiz-error-q">{q.q}</span>
-                  <span className="me-quiz-error-ans">
-                    Дұрыс жауап: <strong>{OPTION_LABELS[correctIdx]}) {opts[correctIdx]}</strong>
-                  </span>
-                </div>
-              ))}
-            </div>
-          )}
-          <div className="me-quiz-result-actions">
-            <button className="me-quiz-retry-btn" onClick={handleRetry}>Қайта бастау</button>
-            <button className="me-quiz-back-btn" onClick={onBack}>← Басты бет</button>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  return (
-    <div className="me-quiz-wrap">
-      <div className="me-quiz-header">
-        <button className="me-quiz-back-btn" onClick={onBack}>← Артқа</button>
-        <span className="me-quiz-progress">{answered} / {total} жауапталды</span>
-      </div>
-      <div className="me-quiz-list">
-        {deck.map(({ q, opts }, qi) => {
-          const sel = answers[q.id];
-          return (
-            <div key={q.id} className="me-quiz-q">
-              <div className="me-quiz-q-text">
-                <span className="me-quiz-q-num">{qi + 1}.</span>
-                <span>{q.q}</span>
-              </div>
-              <div className="me-quiz-options">
-                {opts.map((opt, oi) => (
-                  <label key={oi} className={`me-quiz-option${sel === oi ? " me-quiz-option--sel" : ""}`}>
-                    <input
-                      type="radio"
-                      name={`qm${q.id}`}
-                      checked={sel === oi}
-                      onChange={() => handleSelect(q.id, oi)}
-                      className="me-quiz-radio"
-                    />
-                    <span className="me-quiz-opt-label">{OPTION_LABELS[oi]})</span>
-                    <span className="me-quiz-opt-text">{opt}</span>
-                  </label>
-                ))}
-              </div>
-            </div>
-          );
-        })}
-      </div>
-      <div className="me-quiz-footer">
-        <span className="me-quiz-progress">{answered} / {total} жауапталды</span>
-        <button className="me-quiz-submit-btn" onClick={handleSubmit} disabled={answered < total}>
-          Аяқтау
-        </button>
-      </div>
-    </div>
-  );
-};
 
 const LessonCard: React.FC<{ lesson: Lesson; num: number; delay: number; done?: boolean; onClick: () => void }> = ({ lesson, num, delay, done = false, onClick }) => {
   const style: WithVars = { "--delay": `${delay}ms` };
@@ -5425,8 +5264,7 @@ const MathEdu: React.FC = () => {
     (grade: Grade, lessonId: string) => navigate({ view: "lesson", grade, lessonId }),
     [navigate],
   );
-  const openQuiz    = useCallback((g: Grade) => navigate({ view: "quiz",     grade: g }), [navigate]);
-  const openQuizMix = useCallback(()         => navigate({ view: "quiz-mix"            }), [navigate]);
+  const openQuiz = useCallback((g: Grade) => navigate({ view: "quiz", grade: g }), [navigate]);
 
   const olCarouselRef  = useRef<HTMLDivElement>(null);
   const olDragRef      = useRef<{ active: boolean; startX: number; startScrollLeft: number }>({
@@ -5697,10 +5535,9 @@ const MathEdu: React.FC = () => {
                 sub="Өткен тақырыптарды тест арқылы бекіт"
               />
               <Reveal>
-                <div className="me-cards-grid">
+                <div className="me-cards-grid me-cards-grid--2">
                   <TestCard test={REVIEW_TESTS[0]} onStart={() => openQuiz(5)} />
                   <TestCard test={REVIEW_TESTS[1]} onStart={() => openQuiz(6)} />
-                  <TestCard test={REVIEW_TESTS[2]} onStart={openQuizMix} />
                 </div>
               </Reveal>
             </div>
@@ -5741,9 +5578,6 @@ const MathEdu: React.FC = () => {
       )}
       {route.view === "quiz" && route.grade === 6 && (
         <QuizView questions={QUIZ_6} lsKey="mathedu-test-6" onBack={openHome} />
-      )}
-      {route.view === "quiz-mix" && (
-        <MixQuizView lsKey="mathedu-test-mix" onBack={openHome} />
       )}
 
       {/* Footer */}
