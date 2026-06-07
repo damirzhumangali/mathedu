@@ -4317,7 +4317,7 @@ const MathEdu: React.FC = () => {
               />
               <Reveal>
                 <div className="me-cards-grid me-cards-grid--2">
-                  <TestCard test={REVIEW_TESTS[0]} onStart={() => openQuiz("5")} />
+                  <TestCard test={REVIEW_TESTS[0]} onStart={() => openQuiz(5)} />
                   <TestCard test={REVIEW_TESTS[1]} />
                 </div>
               </Reveal>
@@ -4354,7 +4354,7 @@ const MathEdu: React.FC = () => {
       )}
 
       {/* ══════════ QUIZ VIEW ══════════ */}
-      {route.view === "quiz" && route.grade === "5" && (
+      {route.view === "quiz" && route.grade === 5 && (
         <QuizView questions={QUIZ_5} onBack={openHome} />
       )}
 
