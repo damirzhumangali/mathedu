@@ -1208,7 +1208,7 @@ const GRADES_DATA: GradeData[] = [
             id: "5-2-5",
             title: "ЕҮОБ және ЕКОЕ",
             coverUrl: evobEkoeImg,
-            videoUrl: "/videos/evob-ekoe.mp4",
+            videoUrl: "https://www.youtube.com/embed/Wv1RfxyNC4c",
             formula: "\\text{ЕҮОБ}(a,b) \\cdot \\text{ЕКОЕ}(a,b) = a \\cdot b",
             examples: [
               {
@@ -1471,7 +1471,7 @@ const GRADES_DATA: GradeData[] = [
             id: "5-2-12",
             title: "Бөлшектерді қосу және азайту",
             coverUrl: "/covers/5-2-12.png",
-            videoUrl: "/videos/bolshek-kosu-azaytu.mp4",
+            videoUrl: "https://www.youtube.com/embed/25Cl-pe1BTI",
             formula: "\\frac{a}{c} + \\frac{b}{c} = \\frac{a+b}{c},\\quad \\frac{a}{c} - \\frac{b}{c} = \\frac{a-b}{c},\\quad \\text{әртүрлі бөлімде: ЕКОЕ арқылы ортақ бөлімге келтір}",
             examples: [
               {
@@ -1539,7 +1539,7 @@ const GRADES_DATA: GradeData[] = [
             id: "5-2-13",
             title: "Жай бөлшек пен аралас сандарды көбейту",
             coverUrl: bolshekKobeytуImg,
-            videoUrl: "/videos/bolshek-kobeytu.mp4",
+            videoUrl: "https://www.youtube.com/embed/lbSjiAswRtM",
             formula: "\\frac{a}{b} \\cdot \\frac{c}{d} = \\frac{a \\cdot c}{b \\cdot d},\\quad n\\tfrac{a}{b} = \\frac{n \\cdot b + a}{b},\\quad n \\cdot \\frac{a}{b} = \\frac{n \\cdot a}{b}",
             examples: [
               {
@@ -1675,7 +1675,7 @@ const GRADES_DATA: GradeData[] = [
             id: "5-2-15",
             title: "Аралас сандарды қосу және азайту",
             coverUrl: aralasKosuAzaytuImg,
-            videoUrl: "/videos/aralas-kosu-azaytu.mp4",
+            videoUrl: "https://www.youtube.com/embed/79PycJ4UfRI",
             formula: "a\\tfrac{b}{c} = a + \\tfrac{b}{c},\\quad a\\tfrac{b}{c} + d\\tfrac{e}{c} = (a+d) + \\tfrac{b+e}{c},\\quad \\text{бөлімдер әртүрлі болса — ЕКОЕ арқылы}",
             examples: [
               {
@@ -2552,6 +2552,14 @@ const LessonCard: React.FC<{ lesson: Lesson; num: number; delay: number; done?: 
 // ══════════════════════════════════════════════════════════════════════════
 // TASK BLOCK — interactive quiz
 // ══════════════════════════════════════════════════════════════════════════
+const toEmbedUrl = (url: string): string => {
+  const short = url.match(/youtu\.be\/([^?&/]+)/);
+  if (short) return `https://www.youtube.com/embed/${short[1]}`;
+  const long = url.match(/youtube\.com\/(?:watch\?v=|embed\/)([^?&/]+)/);
+  if (long) return `https://www.youtube.com/embed/${long[1]}`;
+  return url;
+};
+
 const normalize = (s: string) => s.replace(/\s/g, "").toLowerCase();
 
 const TaskBlock: React.FC<{ tasks: Task[] }> = ({ tasks }) => {
@@ -2795,7 +2803,7 @@ const LessonView: React.FC<LessonViewProps> = ({ lesson, chapter, grade, progres
         ) : (
           <iframe
             className="me-video-iframe"
-            src={lesson.videoUrl}
+            src={toEmbedUrl(lesson.videoUrl)}
             title={lesson.title}
             allowFullScreen
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
