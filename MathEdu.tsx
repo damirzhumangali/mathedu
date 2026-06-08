@@ -1674,8 +1674,8 @@ const GRADES_DATA: GradeData[] = [
           {
             id: "5-2-9",
             title: "Бөлшектерді түсіну",
+            videoUrl: "https://youtu.be/25Cl-pe1BTI",
             coverUrl: bolshekImg,
-            videoUrl: "/videos/bolshek-tusinu.mp4",
             formula: "\\frac{a}{b} < 1\\ (\\text{дұрыс}),\\quad \\frac{a}{b} \\geq 1\\ (\\text{бұрыс}),\\quad n\\tfrac{a}{b} = n + \\tfrac{a}{b}",
             examples: [
               {
@@ -4141,11 +4141,12 @@ body.me-scroll-locked { overflow: hidden; }
   padding-left: 24px;
   padding-right: 24px;
   height: 60px;
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  justify-content: space-between;
   gap: 1rem;
 }
+.me-header-inner .me-burger { justify-self: end; }
 .me-logo {
   display: flex;
   align-items: center;
